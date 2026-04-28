@@ -350,7 +350,7 @@ body {
   top: 55%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 90px;
+  width: 70px;
   z-index: 2;
 
   animation: strollerRide 2.2s linear infinite;

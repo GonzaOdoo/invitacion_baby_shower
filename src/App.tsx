@@ -19,7 +19,6 @@ function App() {
 
   const audioRef = useRef<HTMLAudioElement | null>(null)
   const [muted, setMuted] = useState(true)
-  const [started, setStarted] = useState(false)
   const [introVisible, setIntroVisible] = useState(true)
   const [introClosing, setIntroClosing] = useState(false)
 
@@ -75,8 +74,6 @@ const handleStart = () => {
   setMuted(false)
 
   audioRef.current.play().catch(() => {})
-
-  setStarted(true)
 
   // 👇 primero activás animación
   setIntroClosing(true)
