@@ -459,3 +459,88 @@ body {
   filter: drop-shadow(0 6px 10px rgba(0,0,0,0.15));
   opacity: 0.85;
 }
+
+
+
+.intro {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+
+  background: linear-gradient(
+    to bottom,
+    #f8e08e,
+    #f4c542
+  );
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  animation: introFadeIn 0.6s ease;
+}
+
+.intro {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  overflow: hidden;
+}
+
+/* 👇 capa de miel ocupa todo */
+.intro-honey {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+/* contenido arriba */
+.intro-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  color: #5a4634;
+}
+
+/* animación de salida */
+.intro.hide {
+  animation: introFadeOut 1.2s ease forwards;
+}
+
+@keyframes introFadeOut {
+  0% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+    filter: blur(0px);
+  }
+
+  40% {
+    transform: scale(1.03) translateY(-10px);
+  }
+
+  70% {
+    opacity: 0.6;
+    filter: blur(4px);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(1) translateY(-30px);
+    filter: blur(8px);
+  }
+}
+.intro.hide .intro-content {
+  animation: textFade 0.4s ease forwards;
+}
+
+@keyframes textFade {
+  to {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+}

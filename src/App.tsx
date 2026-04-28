@@ -20,6 +20,8 @@ function App() {
   const audioRef = useRef<HTMLAudioElement | null>(null)
   const [muted, setMuted] = useState(true)
   const [started, setStarted] = useState(false)
+  const [introVisible, setIntroVisible] = useState(true)
+  const [introClosing, setIntroClosing] = useState(false)
 
   useEffect(() => {
     const el = pageRef.current
@@ -53,22 +55,6 @@ function App() {
     }
   }, [])
 
-  useEffect(() => {
-  const startAudio = () => {
-    if (!audioRef.current || started) return
-
-    audioRef.current.play().catch(() => {})
-    setStarted(true)
-  }
-
-  window.addEventListener("click", startAudio)
-  window.addEventListener("touchstart", startAudio)
-
-  return () => {
-    window.removeEventListener("click", startAudio)
-    window.removeEventListener("touchstart", startAudio)
-  }
-}, [started])
 
 const toggleSound = () => {
   if (!audioRef.current) return
@@ -82,10 +68,50 @@ const toggleSound = () => {
     audioRef.current.play()
   }
 }
+const handleStart = () => {
+  if (!audioRef.current) return
 
-  return (
+  audioRef.current.muted = false
+  setMuted(false)
+
+  audioRef.current.play().catch(() => {})
+
+  setStarted(true)
+
+  // 👇 primero activás animación
+  setIntroClosing(true)
+
+  // 👇 recién después lo removés
+  setTimeout(() => {
+    setIntroVisible(false)
+  }, 1200) // mismo tiempo que tu animación
+}
+return (
     
     <div className="page" ref={pageRef}>
+      {introVisible && (
+        <div
+          className={`intro ${introClosing ? "hide" : ""}`}
+          onClick={handleStart}
+        >
+          
+          <div className="intro-honey">
+            <div className="honey-blobs">
+              <div className="honey-liquid"></div>
+
+              {Array.from({ length: 8 }).map((_, i) => (
+                <div key={i} className="honey-blob" />
+              ))}
+            </div>
+          </div>
+
+          <div className="intro-content">
+            <p className="intro-text">Tenés una invitación especial 🍯</p>
+            <span className="intro-hint">Tocá para abrir</span>
+          </div>
+
+        </div>
+      )}
       <button className="sound-btn" onClick={toggleSound}>
       {muted ? "🔇" : "🔊"}
     </button>
@@ -186,7 +212,7 @@ const toggleSound = () => {
 
       {/* FOOTER */}
       <Section className="fade-in">
-        <p className="footer"> ¡Solo recordá que es una sorpresa!</p>
+        <p className="footer"> ¡Solo recordá que es una sorpresa para la madre!</p>
         <p className="footer">¡Te esperamos! 🐻</p>
       </Section>
 
