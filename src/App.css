@@ -345,12 +345,16 @@ body {
   align-items: center;
 }
 
+.hero {
+  position: relative;
+}
+
 .hero-anim {
-  position: fixed;
-  top: 55%;
+  position: absolute;
+  top: 52%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 70px;
+  width: 90px;
   z-index: 2;
 
   animation: strollerRide 2.2s linear infinite;
