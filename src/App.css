@@ -21,7 +21,7 @@ body {
 }
 
 .corner-deco img {
-  width: 250px;
+  width: 230px;
   height: auto;
 }
 /* SECCIONES */
@@ -380,4 +380,82 @@ body {
 }
 .hero-anim {
   animation: strollerRide 2.2s linear infinite;
+}
+.event-type {
+  margin-top: 20px;
+  font-size: 16px;
+  color: #c49b3d;
+  letter-spacing: 1px;
+}
+
+
+.sound-btn {
+  position: fixed;
+  top: 15px;
+  right: 15px;
+  z-index: 5;
+
+  background: rgba(255, 255, 255, 0.6);
+  border: none;
+  border-radius: 50%;
+  width: 44px;
+  height: 44px;
+
+  font-size: 20px;
+  cursor: pointer;
+
+  backdrop-filter: blur(6px);
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.sound-btn:hover {
+  transform: scale(1.1);
+  background: rgba(255, 255, 255, 0.8);
+}
+
+.scroll-indicator {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 3;
+
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.scroll-indicator img {
+  width: 60px;
+  height: auto;
+}
+.scroll-indicator.hidden {
+  opacity: 0;
+}
+
+.scroll-indicator.visible {
+  opacity: 1;
+}
+
+@keyframes bounceArrow {
+  0%   { transform: translateY(0); }
+  30%  { transform: translateY(10px); }
+  55%  { transform: translateY(4px); }
+  75%  { transform: translateY(12px); }
+  100% { transform: translateY(0); }
+}
+
+.scroll-indicator img {
+  animation: bounceArrow 1.4s ease-in-out infinite;
+}
+
+.scroll-indicator.hidden {
+  opacity: 0;
+}
+
+.scroll-indicator.visible {
+  opacity: 1;
+}
+
+.scroll-indicator img {
+  filter: drop-shadow(0 6px 10px rgba(0,0,0,0.15));
+  opacity: 0.85;
 }

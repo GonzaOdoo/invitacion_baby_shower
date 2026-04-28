@@ -2,6 +2,8 @@ import './App.css'
 import cochecito from './assets/baby-stroller.png'
 import pooh from './assets/pooh.jpg'
 import { useEffect, useRef, useState } from "react"
+import bgMusic from './assets/bg.mp3'
+import arrow from './assets/arrow.png'
 
 function Section({ children, className = '' }: any) {
   return <section className={`section ${className}`}>{children}</section>
@@ -11,6 +13,13 @@ function App() {
   const [isHero, setIsHero] = useState(true)
 
   const pageRef = useRef<HTMLDivElement>(null)
+  const [isLastSection, setIsLastSection] = useState(false)
+
+  
+
+  const audioRef = useRef<HTMLAudioElement | null>(null)
+  const [muted, setMuted] = useState(true)
+  const [started, setStarted] = useState(false)
 
   useEffect(() => {
     const el = pageRef.current
@@ -19,16 +28,71 @@ function App() {
     const onScroll = () => {
       const scrollY = el.scrollTop
       const height = el.clientHeight
+      const scrollHeight = el.scrollHeight
 
       setIsHero(scrollY < height * 0.8)
+
+      // 👇 detectar última sección
+      setIsLastSection(scrollY + height >= scrollHeight - 10)
     }
 
     el.addEventListener("scroll", onScroll)
     return () => el.removeEventListener("scroll", onScroll)
   }, [])
+
+  useEffect(() => {
+    const audio = new Audio(bgMusic)
+    audio.loop = true
+    audio.volume = 0.4
+    audio.muted = true
+
+    audioRef.current = audio
+
+    return () => {
+      audio.pause()
+    }
+  }, [])
+
+  useEffect(() => {
+  const startAudio = () => {
+    if (!audioRef.current || started) return
+
+    audioRef.current.play().catch(() => {})
+    setStarted(true)
+  }
+
+  window.addEventListener("click", startAudio)
+  window.addEventListener("touchstart", startAudio)
+
+  return () => {
+    window.removeEventListener("click", startAudio)
+    window.removeEventListener("touchstart", startAudio)
+  }
+}, [started])
+
+const toggleSound = () => {
+  if (!audioRef.current) return
+
+  const newMuted = !muted
+  setMuted(newMuted)
+
+  audioRef.current.muted = newMuted
+
+  if (audioRef.current.paused) {
+    audioRef.current.play()
+  }
+}
+
   return (
     
     <div className="page" ref={pageRef}>
+      <button className="sound-btn" onClick={toggleSound}>
+      {muted ? "🔇" : "🔊"}
+    </button>
+    
+      <div className={`scroll-indicator ${isLastSection ? "hidden" : "visible"}`}>
+        <img src={arrow} alt="Scroll" />
+      </div>
       <div className="corner-deco">
         <img src={pooh} alt="" />
       </div>
@@ -96,7 +160,11 @@ function App() {
       {/* MENSAJE */}
       <Section className="fade-in">
         <p className="message">
-          A veces las cosas más pequeñas ocupan más lugar en el corazón 💛
+          Un pequeño milagro está en camino… 🍯
+        </p>
+
+        <p className="event-type">
+          Acompañanos en el Baby Shower de Itzel Amalia 
         </p>
       </Section>
 
