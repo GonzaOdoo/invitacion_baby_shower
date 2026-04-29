@@ -83,6 +83,16 @@ const handleStart = () => {
     setIntroVisible(false)
   }, 1200) // mismo tiempo que tu animación
 }
+const scrollNext = () => {
+  const el = pageRef.current
+  if (!el) return
+
+  const height = el.clientHeight
+  el.scrollTo({
+    top: el.scrollTop + height,
+    behavior: "smooth"
+  })
+}
 return (
     
     <div className="page" ref={pageRef}>
@@ -113,7 +123,10 @@ return (
       {muted ? "🔇" : "🔊"}
     </button>
     
-      <div className={`scroll-indicator ${isLastSection ? "hidden" : "visible"}`}>
+      <div
+        className={`scroll-indicator ${isLastSection ? "hidden" : "visible"}`}
+        onClick={scrollNext}
+      >
         <img src={arrow} alt="Scroll" />
       </div>
       <div className="corner-deco">

@@ -423,7 +423,7 @@ body {
   right: 20px;
   z-index: 3;
 
-  pointer-events: none;
+  pointer-events: auto;
   transition: opacity 0.3s ease;
 }
 
